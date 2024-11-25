@@ -7,16 +7,16 @@ const contentSchema = new mongoose.Schema({
     },
     types:{
       type:String,
-      enum:['Instagram','Youtube','Whatsapp','Facebook','Random'],
-      default:'Random'
+      enum:[,'Youtube','Twitter'],
+      default:'Youtube'
     },
     title:{
         type: String,
         required: true
     },
     tags:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Tags'
+        type: String,
+        
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,

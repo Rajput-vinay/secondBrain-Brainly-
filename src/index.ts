@@ -1,13 +1,16 @@
-import express from "express"
+import express, { Application } from "express"
 import dotenv from 'dotenv'
 import { databaseConnect } from "./database"
+import userRouter from "./Router/userRouter"
 dotenv.config()
 
 
 
-const app = express()
+const app: Application = express()
 
 app.use(express.json())
+
+app.use('/api/v1/users',userRouter)
 
 const RUNNING_PORT = process.env.PORT || 4000 
 
