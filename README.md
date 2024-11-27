@@ -32,7 +32,7 @@ The backend for the SecondBrain application, allowing users to save, manage, and
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/second-brain-backend.git
+   git clone https://github.com/Rajput-vinay/secondBrainBackend.git
    cd second-brain-backend
 
 
@@ -40,20 +40,15 @@ The backend for the SecondBrain application, allowing users to save, manage, and
    ```bash
     npm install  
 
-
 3. **Set Up Environment Variables: Create a .env file in the root directory and add the following**:
    ```bash
     PORT=5000
     MONGO_URI=your_mongo_database_url
     JWT_SECRET=your_jwt_secret
 
-
-
-
  4. **Start the Server**:
    ```bash
    npm run dev
-
 
 ## License 📜
 This project is licensed under the [MIT License](LICENSE).
