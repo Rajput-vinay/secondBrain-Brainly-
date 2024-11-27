@@ -261,47 +261,57 @@ userRouter.delete('/delete/:id',authMiddlewares, async (req: Request, res: Respo
 });
 
 
-userRouter.post('/share',authMiddlewares, async ( req: Request, res: Response): Promise<any> =>{
+userRouter.post(
+  "/share",
+  authMiddlewares,
+  async (req: Request, res: Response): Promise<Response> => {
     try {
-       const userId = req.body.userId
-       const {share} = req.body
-       if(!userId){
-           res.status(411).json({
-               message:"Login Please"
-           })
-       }
-   
-       const hash = uuidv4()
-       if(share){
-            await linkModel.create({
-               userId:userId,
-               hash:hash
-           })
-           return res.status(200).json({
-               message:"Share link created successfully.",
-               sharedLink: "/share/"+ hash
-            })
-       }
-       else{
-           await linkModel.deleteOne({
-               userId:userId
-           })
-   
-           return res.status(200).json({
-               message:"Share link Removed.",
-              
-            })
-       }
-       
-        
+      const { userId, share } = req.body;
+
+      // Check if the user is logged in
+      if (!userId) {
+        return res.status(411).json({
+          message: "Login Please",
+        });
+      }
+
+      const hash = uuidv4();
+
+      if (share) {
+        // Create a new share link
+        await linkModel.create({
+          userId: userId,
+          hash: hash,
+        });
+
+        return res.status(200).json({
+          message: "Share link created successfully.",
+          sharedLink: `/share/${hash}`, 
+        });
+      } else {
+        // Remove the existing share link
+        const result = await linkModel.deleteOne({ userId: userId });
+
+        if (result.deletedCount === 0) {
+          return res.status(404).json({
+            message: "No share link found for this user.",
+          });
+        }
+
+        return res.status(200).json({
+          message: "Share link removed successfully.",
+        });
+      }
     } catch (error) {
-       console.error("Error creating share link:", error)
-       return res.status(500).json({
-         message: "Server error",
-         error: error instanceof Error ? error.message : "Unknown error",
-       });
+      console.error("Error handling share link:", error);
+
+      return res.status(500).json({
+        message: "Server error",
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-   });
+  }
+);
 userRouter.get('/share/:shareLink', async (req: Request, res: Response): Promise<any> => {
     try {
         const { shareLink } = req.params;
