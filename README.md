@@ -47,8 +47,8 @@ The backend for the SecondBrain application, allowing users to save, manage, and
     JWT_SECRET=your_jwt_secret
 
  4. **Start the Server**:
-   ```bash
-   npm run dev
+     ```bash
+     npm run dev
 
 ## License 📜
 This project is licensed under the [MIT License](LICENSE).
